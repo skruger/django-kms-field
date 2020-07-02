@@ -3,6 +3,7 @@ import os
 from django import VERSION as DJANGO_VERSION
 
 DEBUG = True
+UNIT_TEST = True
 
 ADMINS = (
     ('Tester', 'test@example.com'),

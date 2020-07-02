@@ -38,7 +38,8 @@ class KMSEncryptedCharField(models.BinaryField):
 
     @property
     def _kms(self):
-        if not hasattr(self, '_kms_client'):
+        if not hasattr(self, '_kms_client') or settings.UNIT_TEST:
+            # Always get_kms_client() in unit tests so mocks work
             client = get_kms_client()
             setattr(self, '_kms_client', client)
         return getattr(self, '_kms_client')
@@ -59,4 +60,7 @@ class KMSEncryptedCharField(models.BinaryField):
 
         if value is not None:
             return connection.Database.Binary(value)
+        return value
+
+    def to_python(self, value):
         return value
