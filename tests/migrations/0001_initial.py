@@ -16,7 +16,7 @@ class Migration(migrations.Migration):
             name='TestModel',
             fields=[
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('secure_string', django_kms.fields.KMSEncryptedStringField(editable=True, key_id='alias/fake-key')),
+                ('secure_string', django_kms.fields.KMSEncryptedCharField(editable=True, key_id='alias/fake-key')),
             ],
         ),
     ]

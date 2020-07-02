@@ -9,7 +9,7 @@ def get_kms_client():
     return boto3.client('kms', getattr(settings, 'KMS_FIELD_REGION', 'us-east-1'))
 
 
-class KMSEncryptedStringField(models.BinaryField):
+class KMSEncryptedCharField(models.BinaryField):
     def __init__(self, key_id=None, *args, **kwargs):
         kwargs.setdefault('editable', True)
         self.key_id = key_id or getattr(settings, "KMS_FIELD_KEY", None)
@@ -25,7 +25,7 @@ class KMSEncryptedStringField(models.BinaryField):
         if self.key_id is None:
             extra_checks.append(
                 checks.Error(
-                    "KMSEncryptedStringField must define a key_id attribute or "
+                    "KMSEncryptedCharField must define a key_id attribute or "
                     "settings.KMS_FIELD_KEY must be set.",
                     obj=self,
                 )

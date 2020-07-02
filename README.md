@@ -3,7 +3,7 @@
 
 KMS encrypted database field for Django.
 
-The KMSEncryptedStringField uses your KMS key to encrypt your
+The KMSEncryptedCharField uses your KMS key to encrypt your
 data before it is stored in the database and it decrypts it again
 when you read from the database.
 
@@ -19,13 +19,13 @@ frequently read and saved models.
 ### Example
 ```python
 from django.db import models
-from django_kms.fields import KMSEncryptedStringField
+from django_kms.fields import KMSEncryptedCharField
 
 
 class StoredCredential(models.Model):
     description = models.CharField(max_length=50)
     username = models.CharField(max_length=50)
-    password = KMSEncryptedStringField(key_id="alias/my_key")
+    password = KMSEncryptedCharField(key_id="alias/my_key")
 
 ```
 

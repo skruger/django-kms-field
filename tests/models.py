@@ -4,5 +4,5 @@ from django_kms import fields
 
 
 class TestModel(models.Model):
-    secure_string = fields.KMSEncryptedStringField()
+    secure_string = fields.KMSEncryptedCharField()
 
