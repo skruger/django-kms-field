@@ -8,6 +8,7 @@ setup(
     version=django_kms.__version__,
     description='Add Amazon KMS encrypted database fields',
     long_description=open('README.md').read(),
+    long_description_content_type='text/markdown',
     author='Shaun Kruger',
     author_email='shaun.kruger@gmail.com',
     url = 'https://github.com/skruger/django-kms-field',
