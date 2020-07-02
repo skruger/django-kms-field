@@ -1,0 +1,3 @@
+boto3
+tox
+#Django>=2.2,<3.0
