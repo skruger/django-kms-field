@@ -1,8 +1,12 @@
+import hashlib
+
 import boto3
 
 from django.db import models
 from django.conf import settings
 from django.core import checks
+
+from .cache import SimpleCache
 
 
 def get_kms_client():
@@ -13,6 +17,7 @@ class KMSEncryptedCharField(models.BinaryField):
     def __init__(self, key_id=None, *args, **kwargs):
         kwargs.setdefault('editable', True)
         self.key_id = key_id or getattr(settings, "KMS_FIELD_KEY", None)
+        self._ciphertext_cache = SimpleCache(max_size=getattr(settings, "KMS_FIELD_LRU_SIZE", 250))
         super().__init__(*args, **kwargs)
 
     def deconstruct(self):
@@ -48,8 +53,17 @@ class KMSEncryptedCharField(models.BinaryField):
         if value is None:
             return value
 
-        result = self._kms.decrypt(CiphertextBlob=bytes(value))
-        return result.get('Plaintext').decode()
+        ciphertext = bytes(value)
+        ciphertext_hash = hashlib.sha1()
+        ciphertext_hash.update(ciphertext)
+        cache_key = ciphertext_hash.hexdigest()
+        try:
+            return self._ciphertext_cache.get(cache_key)
+        except self._ciphertext_cache.CacheMiss:
+            result = self._kms.decrypt(CiphertextBlob=bytes(value))
+            new_value = result.get('Plaintext').decode()
+            self._ciphertext_cache.set(cache_key, new_value)
+            return new_value
 
     def get_db_prep_value(self, value, connection, prepared=False):
         if isinstance(value, str):
