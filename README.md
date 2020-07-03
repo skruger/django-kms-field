@@ -33,4 +33,5 @@ class StoredCredential(models.Model):
 ```python
 KMS_FIELD_KEY = 'alias/<my-key>'
 KMS_FIELD_REGION = 'us-west-2'
+KMS_FIELD_CACHE_SIZE = 500  # Number of decrypted plaintext values to hold in memory
 ```

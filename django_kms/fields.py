@@ -17,7 +17,7 @@ class KMSEncryptedCharField(models.BinaryField):
     def __init__(self, key_id=None, *args, **kwargs):
         kwargs.setdefault('editable', True)
         self.key_id = key_id or getattr(settings, "KMS_FIELD_KEY", None)
-        self._ciphertext_cache = SimpleCache(max_size=getattr(settings, "KMS_FIELD_LRU_SIZE", 250))
+        self._ciphertext_cache = SimpleCache(max_size=getattr(settings, "KMS_FIELD_CACHE_SIZE", 250))
         super().__init__(*args, **kwargs)
 
     def deconstruct(self):
