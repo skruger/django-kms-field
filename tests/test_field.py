@@ -53,6 +53,11 @@ class FieldTestCase(TestCase):
         self.assertEqual(instance2.secure_string, instance.secure_string)
         client.decrypt.assert_called_once_with(**decrypt_kwargs)
 
+        instance3 = TestModel.objects.get(pk=instance.pk)
+
+        self.assertEqual(instance3.secure_string, instance.secure_string)
+        client.decrypt.assert_called_once_with(**decrypt_kwargs)
+
     @mock.patch('django_kms.fields.get_kms_client')
     def test_form_save(self, get_client):
         test_string = "This is the form value to be encrypted"
