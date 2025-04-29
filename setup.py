@@ -24,7 +24,7 @@ setup(
         'Framework :: Django',
     ],
     install_requires=[
-        "boto3>=1.13",
+        "boto3>=1.29.7",
     ],
     include_package_data=True,
     zip_safe=False,
