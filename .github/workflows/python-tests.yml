@@ -8,7 +8,7 @@ jobs:
     strategy:
       matrix:
         python-version: ["3.10", "3.11", "3.12", "3.13"]
-        django-version: ["Django>4.2,<5.0", "Django>5.2,<6.0"]
+        django-version: ["Django>4.2,<5.0", "Django==5.2"]
 
     env:
       DJANGO_SETTINGS_MODULE: tests.settings
