@@ -1,0 +1,24 @@
+name: Python Unit Tests
+
+on: [push]
+
+jobs:
+  build:
+    runs-on: ubuntu-22.04
+    strategy:
+      matrix:
+        python-version: ["3.10", "3.11", "3.12", "3.13"]
+        django-version: ["Django>3.2,<4.0", "Django>4.2,<5.0", "Django>5.2,<6.0"]
+
+    env:
+      DJANGO_SETTINGS_MODULE: tests.settings
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up Python ${{matrix.python-version}}
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+      - name: Install deps
+        run: pip install ${{ matrix.django-version }} -r requirements.txt
+      - name: Test
+        run: python manage.py test
