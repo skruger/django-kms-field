@@ -4,11 +4,11 @@ on: [push]
 
 jobs:
   build:
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-latest
     strategy:
       matrix:
         python-version: ["3.10", "3.11", "3.12", "3.13"]
-        django-version: ["Django>3.2,<4.0", "Django>4.2,<5.0", "Django>5.2,<6.0"]
+        django-version: ["Django>4.2,<5.0", "Django>5.2,<6.0"]
 
     env:
       DJANGO_SETTINGS_MODULE: tests.settings
