@@ -19,6 +19,6 @@ jobs:
         with:
           python-version: ${{ matrix.python-version }}
       - name: Install deps
-        run: pip install ${{ matrix.django-version }} -r requirements.txt
+        run: "pip install \"${{ matrix.django-version }}\" -r requirements.txt"
       - name: Test
         run: python manage.py test
